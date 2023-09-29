@@ -1,7 +1,7 @@
 import { FormEvent, useState, useEffect } from "react";
 import { Player, TodayPlayer, UpdatedAttendancePlayer } from "../types";
 import PlayerItem from "./PlayerItem";
-import { getTodayDate } from "../../utils/date";
+import { formatDate, getTodayDate } from "../../utils/date";
 import Submit from "../../components/Submit";
 
 type TodayPlayersProps = {
@@ -9,11 +9,8 @@ type TodayPlayersProps = {
 };
 const TodayPlayers = ({ players }: TodayPlayersProps): JSX.Element => {
   const [todayPlayers, setTodayPlayers] = useState<Player[] | null>(null);
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    console.log("todayPlayers", todayPlayers);
-  };
   const today = getTodayDate();
+
   useEffect(() => {
     const todayPlayer = players.map((player) => {
       return {
@@ -27,6 +24,8 @@ const TodayPlayers = ({ players }: TodayPlayersProps): JSX.Element => {
     setTodayPlayers(todayPlayer);
   }, [players, today]);
 
+  if (!todayPlayers) return <h2>En chargement ...</h2>;
+
   const handlePlayerChange = ({ id, attendance }: UpdatedAttendancePlayer) => {
     if (!todayPlayers) return;
     const updateTodayPlayers = todayPlayers.map((player) => {
@@ -36,9 +35,15 @@ const TodayPlayers = ({ players }: TodayPlayersProps): JSX.Element => {
     setTodayPlayers(updateTodayPlayers);
   };
 
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    console.log("todayPlayers", todayPlayers);
+  };
+
   return (
     <>
-      <h2>Liste des joueurs présents le </h2>
+      <h2>Liste des joueurs présents</h2>
+      <h3>Le {formatDate(today)}</h3>
       <form className="vertical-stack form" onSubmit={handleSubmit}>
         {todayPlayers &&
           todayPlayers.map((player) => (
