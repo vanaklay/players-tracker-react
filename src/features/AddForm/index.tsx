@@ -1,4 +1,5 @@
 import { FormEvent } from "react";
+import Submit from "../../components/Submit";
 
 type AddFormProps = {
   addPlayer: (firstName: string, lastName: string) => void;
@@ -35,7 +36,7 @@ const AddForm = ({ addPlayer }: AddFormProps): JSX.Element => {
         Prénom :
         <input type="text" name="firstName" />
       </label>
-      <input type="submit" value="Ajouter" />
+      <Submit inputValue="Ajouter" />
     </form>
   );
 };

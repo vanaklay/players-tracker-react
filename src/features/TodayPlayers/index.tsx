@@ -2,6 +2,7 @@ import { FormEvent, useState, useEffect } from "react";
 import { Player, TodayPlayer, UpdatedAttendancePlayer } from "../types";
 import PlayerItem from "./PlayerItem";
 import { getTodayDate } from "../../utils/date";
+import Submit from "../../components/Submit";
 
 type TodayPlayersProps = {
   players: TodayPlayer[];
@@ -10,6 +11,7 @@ const TodayPlayers = ({ players }: TodayPlayersProps): JSX.Element => {
   const [todayPlayers, setTodayPlayers] = useState<Player[] | null>(null);
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
+    console.log("todayPlayers", todayPlayers);
   };
   const today = getTodayDate();
   useEffect(() => {
@@ -26,7 +28,6 @@ const TodayPlayers = ({ players }: TodayPlayersProps): JSX.Element => {
   }, [players, today]);
 
   const handlePlayerChange = ({ id, attendance }: UpdatedAttendancePlayer) => {
-    console.log(id, attendance);
     if (!todayPlayers) return;
     const updateTodayPlayers = todayPlayers.map((player) => {
       if (player.id === id) return { ...player, attendance };
@@ -50,6 +51,7 @@ const TodayPlayers = ({ players }: TodayPlayersProps): JSX.Element => {
               id={player.id}
             />
           ))}
+        <Submit inputValue="Valider" />
       </form>
     </>
   );
