@@ -1,47 +1,27 @@
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import AddForm from "./features/AddForm";
 import TodayPlayers from "./features/TodayPlayers";
-// import { getPlayers } from "./api/firebase-api";
-// import { DocumentData } from "firebase/firestore";
+import { addPlayerOnDatabase, getPlayers } from "./api/firebase-api";
+import { TodayPlayer } from "./features/types";
 
 function App() {
-  // const [players, setPlayers] = useState<DocumentData[]>([]);
+  const [players, setPlayers] = useState<TodayPlayer[]>([]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const playersData = await getPlayers();
-  //       setPlayers(playersData);
-  //     } catch (error) {
-  //       console.log("Fetch players error with :", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const playersData = await getPlayers();
+        setPlayers(playersData as TodayPlayer[]);
+      } catch (error) {
+        console.log("Fetch players error with :", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  const players = [
-    {
-      id: 1,
-      firstName: "Nicolas",
-      lastName: "Anelka",
-      daysAttendance: { "2023-09-26": true },
-    },
-    {
-      id: 2,
-      firstName: "Thierry",
-      lastName: "Henry",
-      daysAttendance: { "2023-09-26": true },
-    },
-    {
-      id: 3,
-      firstName: "Zinedine",
-      lastName: "Zidane",
-      daysAttendance: { "2023-09-26": true },
-    },
-  ];
-  const addPlayer = (firstName: string, lastName: string) => {
-    console.log(firstName, lastName);
+  const addPlayer = async (firstName: string, lastName: string) => {
+    await addPlayerOnDatabase(firstName, lastName);
   };
   return (
     <>
