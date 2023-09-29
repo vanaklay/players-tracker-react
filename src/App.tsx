@@ -1,7 +1,7 @@
 // import { useState, useEffect } from "react";
 import "./App.css";
-import AddForm from "./components/AddForm";
-import TodayPlayers from "./components/TodayPlayers";
+import AddForm from "./features/AddForm";
+import TodayPlayers from "./features/TodayPlayers";
 // import { getPlayers } from "./api/firebase-api";
 // import { DocumentData } from "firebase/firestore";
 

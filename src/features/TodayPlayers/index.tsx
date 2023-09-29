@@ -1,10 +1,10 @@
 import { FormEvent, useState, useEffect } from "react";
-import { Player, UpdatedAttendancePlayer } from "../types";
+import { Player, TodayPlayer, UpdatedAttendancePlayer } from "../types";
 import PlayerItem from "./PlayerItem";
 import { getTodayDate } from "../../utils/date";
 
 type TodayPlayersProps = {
-  players: Player[];
+  players: TodayPlayer[];
 };
 const TodayPlayers = ({ players }: TodayPlayersProps): JSX.Element => {
   const [todayPlayers, setTodayPlayers] = useState<Player[] | null>(null);
