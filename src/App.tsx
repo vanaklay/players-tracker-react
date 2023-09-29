@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// import { useState, useEffect } from "react";
+import "./App.css";
+import AddForm from "./components/AddForm";
+import TodayPlayers from "./components/TodayPlayers";
+// import { getPlayers } from "./api/firebase-api";
+// import { DocumentData } from "firebase/firestore";
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [players, setPlayers] = useState<DocumentData[]>([]);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const playersData = await getPlayers();
+  //       setPlayers(playersData);
+  //     } catch (error) {
+  //       console.log("Fetch players error with :", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  const players = [
+    {
+      id: 1,
+      firstName: "Nicolas",
+      lastName: "Anelka",
+      daysAttendance: { "2023-09-26": true },
+    },
+    {
+      id: 2,
+      firstName: "Thierry",
+      lastName: "Henry",
+      daysAttendance: { "2023-09-26": true },
+    },
+    {
+      id: 3,
+      firstName: "Zinedine",
+      lastName: "Zidane",
+      daysAttendance: { "2023-09-26": true },
+    },
+  ];
+  const addPlayer = (firstName: string, lastName: string) => {
+    console.log(firstName, lastName);
+  };
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>U-18 CS Ternes</h1>
+      <AddForm addPlayer={addPlayer} />
+      <TodayPlayers players={players} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
