@@ -17,13 +17,11 @@ const PlayerItem = ({
   };
   return (
     <div
-      className={clsx(styles.root, { [styles.checked]: attendance })}
+      className={clsx(styles["player-item"], { [styles.checked]: attendance })}
       onClick={toggleAttendance}
     >
-      <div className={styles.section}>
-        <p>{firstName}</p>
-        <p>{lastName}</p>
-      </div>
+      <p>{firstName}</p>
+      <p>{lastName}</p>
     </div>
   );
 };

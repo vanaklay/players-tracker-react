@@ -37,10 +37,6 @@
   margin: 24px 8px;
 }
 
-.form {
-  align-items: flex-start;
-}
-
 .form input[type="submit"] {
   align-self: flex-end;
   width: 10rem;
