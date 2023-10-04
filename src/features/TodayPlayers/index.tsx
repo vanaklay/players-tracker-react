@@ -1,21 +1,16 @@
-import { FormEvent, useState } from "react";
-import { TodayPlayer, UpdatedAttendancePlayer } from "../types";
+import { FormEvent, useContext, useState } from "react";
 import PlayerItem from "./PlayerItem";
 import { formatDate, getTodayDate } from "../../utils/date";
 import Submit from "../../components/Submit";
 import Spinner from "../../components/Spinner";
 import { updatePlayers } from "../../utils/players";
 import SuccessToast from "../../components/SuccessToast";
+import { PlayersContext } from "../../context/players-context";
+import { UpdatedAttendancePlayer } from "../types";
 
-type TodayPlayersProps = {
-  players: TodayPlayer[];
-  setPlayers: (players: TodayPlayer[]) => void;
-};
-const TodayPlayers = ({
-  players,
-  setPlayers,
-}: TodayPlayersProps): JSX.Element => {
+const TodayPlayers = (): JSX.Element => {
   const [showSuccess, setShowSuccess] = useState(false);
+  const { players, setPlayers } = useContext(PlayersContext);
   if (!players || players.length === 0) return <Spinner />;
 
   const today = getTodayDate();
