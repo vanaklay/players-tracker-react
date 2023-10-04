@@ -13,17 +13,22 @@ const AddForm = ({ addPlayer }: AddFormProps): JSX.Element => {
     const lastNameInput = form.querySelector("input[name='lastName']");
 
     if (
-      firstNameInput instanceof HTMLInputElement &&
-      lastNameInput instanceof HTMLInputElement
+      !(firstNameInput instanceof HTMLInputElement) ||
+      !(lastNameInput instanceof HTMLInputElement) ||
+      firstNameInput.value.trim().length === 0 ||
+      lastNameInput.value.trim().length === 0
     ) {
-      const firstName = firstNameInput.value;
-      const lastName = lastNameInput.value;
-
-      addPlayer(firstName, lastName);
-
-      firstNameInput.value = "";
-      lastNameInput.value = "";
+      alert("Invalid inputs !");
+      return;
     }
+
+    const firstName = firstNameInput.value;
+    const lastName = lastNameInput.value;
+
+    addPlayer(firstName, lastName);
+
+    firstNameInput.value = "";
+    lastNameInput.value = "";
   };
 
   return (
