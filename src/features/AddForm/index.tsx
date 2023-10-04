@@ -1,11 +1,13 @@
 import { FormEvent } from "react";
 import Submit from "../../components/Submit";
+import { addPlayerOnDatabase } from "../../api/firebase-api";
 
-type AddFormProps = {
-  addPlayer: (firstName: string, lastName: string) => void;
-};
-const AddForm = ({ addPlayer }: AddFormProps): JSX.Element => {
-  const handleAddForm = (event: FormEvent) => {
+const AddForm = (): JSX.Element => {
+  const addPlayer = async (firstName: string, lastName: string) => {
+    await addPlayerOnDatabase(firstName, lastName);
+  };
+
+  const handleAddForm = async (event: FormEvent) => {
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
 
@@ -25,7 +27,7 @@ const AddForm = ({ addPlayer }: AddFormProps): JSX.Element => {
     const firstName = firstNameInput.value;
     const lastName = lastNameInput.value;
 
-    addPlayer(firstName, lastName);
+    await addPlayer(firstName, lastName);
 
     firstNameInput.value = "";
     lastNameInput.value = "";
