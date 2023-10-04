@@ -1,8 +1,8 @@
 export type Player = {
   lastName: string;
   firstName: string;
-  attendance?: boolean;
-  id: string | number;
+  attendance: boolean;
+  id: string;
 };
 
 export type TodayPlayer = Player & {

@@ -4,6 +4,7 @@ import PlayerItem from "./PlayerItem";
 import { formatDate, getTodayDate } from "../../utils/date";
 import Submit from "../../components/Submit";
 import Spinner from "../../components/Spinner";
+import { updatePlayers } from "../../utils/players";
 
 type TodayPlayersProps = {
   players: TodayPlayer[];
@@ -38,7 +39,8 @@ const TodayPlayers = ({ players }: TodayPlayersProps): JSX.Element => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    console.log("todayPlayers", todayPlayers);
+    const updatedPlayers = updatePlayers(todayPlayers);
+    console.log("updatedPlayers", updatedPlayers);
   };
 
   return (
