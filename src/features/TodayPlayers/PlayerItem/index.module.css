@@ -15,8 +15,8 @@
 }
 
 .player-item.checked {
-  background-color: #dcfce7;
-  border-color: #22c55e;
-  box-shadow: 0 1px 0.5em #22c55e75;
+  background-color: var(--success-background);
+  border-color: var(--success-border);
+  box-shadow: 0 1px 0.5em var(--succes-box-shadow);
   color: #242424;
 }

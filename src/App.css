@@ -6,6 +6,9 @@
   --input-background: #1a1a1a;
   --paper: #333333;
   --bg-code: #2c2c54;
+  --success-background: #dcfce7;
+  --success-border: #22c55e;
+  --succes-box-shadow: #22c55e75;
 
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;

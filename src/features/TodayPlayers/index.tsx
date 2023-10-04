@@ -1,10 +1,11 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { TodayPlayer, UpdatedAttendancePlayer } from "../types";
 import PlayerItem from "./PlayerItem";
 import { formatDate, getTodayDate } from "../../utils/date";
 import Submit from "../../components/Submit";
 import Spinner from "../../components/Spinner";
 import { updatePlayers } from "../../utils/players";
+import SuccessToast from "../../components/SuccessToast";
 
 type TodayPlayersProps = {
   players: TodayPlayer[];
@@ -14,6 +15,7 @@ const TodayPlayers = ({
   players,
   setPlayers,
 }: TodayPlayersProps): JSX.Element => {
+  const [showSuccess, setShowSuccess] = useState(false);
   if (!players || players.length === 0) return <Spinner />;
 
   const today = getTodayDate();
@@ -28,7 +30,13 @@ const TodayPlayers = ({
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    await updatePlayers(players);
+    const updatedPlayers = await updatePlayers(players);
+    if (updatedPlayers) {
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 3000);
+    }
   };
 
   return (
@@ -48,6 +56,7 @@ const TodayPlayers = ({
         ))}
         <Submit inputValue="Valider" />
       </form>
+      {showSuccess && <SuccessToast message="Sauvegarder" />}
     </>
   );
 };
