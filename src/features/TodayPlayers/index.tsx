@@ -3,6 +3,7 @@ import { Player, TodayPlayer, UpdatedAttendancePlayer } from "../types";
 import PlayerItem from "./PlayerItem";
 import { formatDate, getTodayDate } from "../../utils/date";
 import Submit from "../../components/Submit";
+import Spinner from "../../components/Spinner";
 
 type TodayPlayersProps = {
   players: TodayPlayer[];
@@ -44,20 +45,24 @@ const TodayPlayers = ({ players }: TodayPlayersProps): JSX.Element => {
     <>
       <h2>Liste des joueurs présents</h2>
       <h3>Le {formatDate(today)}</h3>
-      <form className="vertical-stack form" onSubmit={handleSubmit}>
-        {todayPlayers &&
-          todayPlayers.map((player) => (
-            <PlayerItem
-              key={`${player.id}-${player.lastName}`}
-              lastName={player.lastName}
-              firstName={player.firstName}
-              attendance={player.attendance}
-              handlePlayerChange={handlePlayerChange}
-              id={player.id}
-            />
-          ))}
-        <Submit inputValue="Valider" />
-      </form>
+      {todayPlayers.length === 0 ? (
+        <Spinner />
+      ) : (
+        <form className="vertical-stack form" onSubmit={handleSubmit}>
+          {todayPlayers &&
+            todayPlayers.map((player) => (
+              <PlayerItem
+                key={`${player.id}-${player.lastName}`}
+                lastName={player.lastName}
+                firstName={player.firstName}
+                attendance={player.attendance}
+                handlePlayerChange={handlePlayerChange}
+                id={player.id}
+              />
+            ))}
+          <Submit inputValue="Valider" />
+        </form>
+      )}
     </>
   );
 };
