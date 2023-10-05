@@ -17,7 +17,7 @@ const MonthSelector = ({
     <div>
       <label>Sélectionnez un mois :</label>
       <select value={selectedMonth} onChange={handleChange}>
-        <option value="">Sélectionnez un mois</option>
+        <option value="">-</option>
         {Object.entries(MONTH).map(([monthNumber, monthName]) => (
           <option key={monthNumber} value={monthNumber}>
             {monthName}

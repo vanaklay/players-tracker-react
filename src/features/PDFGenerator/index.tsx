@@ -13,6 +13,7 @@ const PDFGenerator = () => {
 
   return (
     <>
+      <h2>Pour télécharger un mois de présence ⬇️</h2>
       <MonthSelector
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
