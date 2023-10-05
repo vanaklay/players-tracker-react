@@ -1,5 +1,6 @@
 import "./App.css";
 import AddForm from "./features/AddForm";
+import PDFGenerator from "./features/PDFGenerator";
 import TodayPlayers from "./features/TodayPlayers";
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
       <h1>U-18 CS Ternes</h1>
       <AddForm />
       <TodayPlayers />
+      <PDFGenerator />
     </>
   );
 }
