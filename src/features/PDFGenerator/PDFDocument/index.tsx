@@ -1,12 +1,27 @@
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { Player } from "../../types";
+import AttendanceTable from "../AttendanceTable";
+// import { formatDate, getTodayDate } from "../../../utils/date";
 
 const styles = StyleSheet.create({
   page: {
-    flexDirection: "row",
+    flexDirection: "column",
+  },
+  subTitle: {
+    fontSize: "2rem",
+    lineHeight: "1.1",
+  },
+  title: {
+    fontSize: "30px",
+  },
+  heading: {
+    flexDirection: "column",
+    textAlign: "center",
+    marginBottom: "16px",
+    marginTop: "16px",
   },
   section: {
-    flexGrow: 1,
+    flexDirection: "column",
   },
 });
 
@@ -17,14 +32,11 @@ const PDFDocument = ({ data }: PDFDocumentProps) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          {data.map((player) => {
-            return <Text key={player.id}>{player.firstName}</Text>;
-          })}
+        <View style={[styles.heading]}>
+          <Text style={styles.title}>CS Ternes U-18</Text>
+          <Text style={styles.subTitle}>Présence des joueurs</Text>
         </View>
-        <View style={styles.section}>
-          <Text>We're inside a PDF!</Text>
-        </View>
+        <AttendanceTable data={data} />
       </Page>
     </Document>
   );
