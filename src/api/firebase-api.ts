@@ -12,7 +12,6 @@ import { getTodayDate } from "../utils/date";
 const collectionName = "test-players";
 
 export const getPlayers = async () => {
-  const today = getTodayDate();
   const playersCollection = collection(database, collectionName);
   const playersSnapshot = await getDocs(playersCollection);
   const players = playersSnapshot.docs.map((doc) => {
@@ -21,7 +20,7 @@ export const getPlayers = async () => {
       id: doc.id,
       firstName,
       lastName,
-      attendance: daysAttendance[today] || false,
+      daysAttendance,
     };
   });
   return players;

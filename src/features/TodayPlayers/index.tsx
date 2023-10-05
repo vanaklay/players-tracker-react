@@ -10,22 +10,22 @@ import { UpdatedAttendancePlayer } from "../types";
 
 const TodayPlayers = (): JSX.Element => {
   const [showSuccess, setShowSuccess] = useState(false);
-  const { players, setPlayers } = useContext(PlayersContext);
-  if (!players || players.length === 0) return <Spinner />;
+  const { todayPlayers, setTodayPlayers } = useContext(PlayersContext);
+  if (!todayPlayers || todayPlayers.length === 0) return <Spinner />;
 
   const today = getTodayDate();
   const handlePlayerChange = ({ id, attendance }: UpdatedAttendancePlayer) => {
-    if (!players) return;
-    const updateTodayPlayers = players.map((player) => {
+    if (!todayPlayers) return;
+    const updateTodayPlayers = todayPlayers.map((player) => {
       if (player.id === id) return { ...player, attendance };
       return player;
     });
-    setPlayers(updateTodayPlayers);
+    setTodayPlayers(updateTodayPlayers);
   };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const updatedPlayers = await updatePlayers(players);
+    const updatedPlayers = await updatePlayers(todayPlayers);
     if (updatedPlayers) {
       setShowSuccess(true);
       setTimeout(() => {
@@ -39,7 +39,7 @@ const TodayPlayers = (): JSX.Element => {
       <h2>Liste des joueurs présents</h2>
       <h3>Le {formatDate(today)}</h3>
       <form className="vertical-stack form" onSubmit={handleSubmit}>
-        {players.map((player) => (
+        {todayPlayers.map((player) => (
           <PlayerItem
             key={`${player.id}-${player.lastName}`}
             lastName={player.lastName}

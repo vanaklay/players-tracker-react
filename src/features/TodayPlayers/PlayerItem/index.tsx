@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import styles from "./index.module.css";
-import { Player, UpdatedAttendancePlayer } from "../../types";
+import { TodayPlayer, UpdatedAttendancePlayer } from "../../types";
 
-type PlayerItemProps = Player & {
+type PlayerItemProps = TodayPlayer & {
   handlePlayerChange: ({ id, attendance }: UpdatedAttendancePlayer) => void;
 };
 const PlayerItem = ({

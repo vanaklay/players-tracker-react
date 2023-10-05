@@ -1,7 +1,7 @@
 import { updatePlayerAttendance } from "../api/firebase-api";
-import { Player } from "../features/types";
+import { TodayPlayer } from "../features/types";
 
-export const updatePlayers = async (players: Player[]) => {
+export const updatePlayers = async (players: TodayPlayer[]) => {
   if (players.length === 0) throw new Error("Players is undefined !");
   try {
     return await Promise.all(

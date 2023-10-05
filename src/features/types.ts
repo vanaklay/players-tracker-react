@@ -1,12 +1,12 @@
 export type Player = {
   lastName: string;
   firstName: string;
-  attendance: boolean;
+  daysAttendance: Record<string, boolean>;
   id: string;
 };
 
-export type TodayPlayer = Player & {
-  daysAttendance: Record<string, boolean>;
+export type TodayPlayer = Omit<Player, "daysAttendance"> & {
+  attendance: boolean;
 };
 
-export type UpdatedAttendancePlayer = Pick<Player, "attendance" | "id">;
+export type UpdatedAttendancePlayer = Pick<TodayPlayer, "attendance" | "id">;

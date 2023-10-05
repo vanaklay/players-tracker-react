@@ -1,27 +1,42 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { getPlayers } from "../api/firebase-api";
-import { TodayPlayer } from "../features/types";
+import { Player, TodayPlayer } from "../features/types";
+import { getTodayDate } from "../utils/date";
 
 type Props = {
   children?: ReactNode;
 };
 
 export const PlayersContext = createContext<{
-  players: TodayPlayer[];
-  setPlayers: React.Dispatch<React.SetStateAction<TodayPlayer[]>>;
+  todayPlayers: TodayPlayer[];
+  setTodayPlayers: React.Dispatch<React.SetStateAction<TodayPlayer[]>>;
+  players: Player[];
 }>({
+  todayPlayers: [],
+  setTodayPlayers: () => {},
   players: [],
-  setPlayers: () => {},
 });
 
 export const PlayersProvider = ({ children }: Props) => {
-  const [players, setPlayers] = useState<TodayPlayer[]>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [todayPlayers, setTodayPlayers] = useState<TodayPlayer[]>([]);
 
   useEffect(() => {
     const getPlayersMap = async () => {
+      const today = getTodayDate();
       try {
         const playersData = await getPlayers();
-        setPlayers(playersData as TodayPlayer[]);
+        setPlayers(playersData as Player[]);
+
+        const todayPlayers = playersData.map((player) => {
+          return {
+            id: player.id,
+            firstName: player.firstName,
+            lastName: player.lastName,
+            attendance: player.daysAttendance[today] || false,
+          };
+        });
+        setTodayPlayers(todayPlayers as TodayPlayer[]);
       } catch (error) {
         alert(`Fetch players error with ${error}`);
       }
@@ -33,8 +48,9 @@ export const PlayersProvider = ({ children }: Props) => {
   }, []);
 
   const value = {
+    todayPlayers,
+    setTodayPlayers,
     players,
-    setPlayers,
   };
 
   return (
