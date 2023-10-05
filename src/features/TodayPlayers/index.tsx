@@ -11,7 +11,12 @@ import { UpdatedAttendancePlayer } from "../types";
 const TodayPlayers = (): JSX.Element => {
   const [showSuccess, setShowSuccess] = useState(false);
   const { todayPlayers, setTodayPlayers } = useContext(PlayersContext);
-  if (!todayPlayers || todayPlayers.length === 0) return <Spinner />;
+  if (!todayPlayers || todayPlayers.length === 0)
+    return (
+      <div className="centered-spinner">
+        <Spinner />
+      </div>
+    );
 
   const today = getTodayDate();
   const handlePlayerChange = ({ id, attendance }: UpdatedAttendancePlayer) => {

@@ -9,7 +9,12 @@ import { PlayersContext } from "../../context/players-context";
 const PDFGenerator = () => {
   const [selectedMonth, setSelectedMonth] = useState<string>("");
   const { players } = useContext(PlayersContext);
-  if (!players || players.length === 0) return <Spinner />;
+  if (!players || players.length === 0)
+    return (
+      <div className="centered-spinner">
+        <Spinner />
+      </div>
+    );
 
   return (
     <>
