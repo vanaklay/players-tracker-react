@@ -1,13 +1,14 @@
 import Layer from "../components/Layer";
 import Navigation from "../features/Navigation";
+import PDFGenerator from "../features/PDFGenerator";
 
-const PageNotFound = () => {
+const DownloadPage = () => {
   return (
     <Layer>
       <Navigation option="other" />
-      <div>PageNotFound</div>
+      <PDFGenerator />
     </Layer>
   );
 };
 
-export default PageNotFound;
+export default DownloadPage;
