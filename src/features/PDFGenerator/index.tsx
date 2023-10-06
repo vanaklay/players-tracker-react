@@ -6,6 +6,7 @@ import styles from "./index.module.css";
 import MonthSelector from "./MonthSelector";
 import { Player } from "../types";
 import { getPlayers } from "../../api/firebase-api";
+import { getSortedPlayersByFirstName } from "../../utils/players";
 
 const PDFGenerator = () => {
   const [selectedMonth, setSelectedMonth] = useState<string>("");
@@ -15,7 +16,8 @@ const PDFGenerator = () => {
     const getPlayersMap = async () => {
       try {
         const playersData = await getPlayers();
-        setPlayers(playersData as Player[]);
+        const sortedPlayers = getSortedPlayersByFirstName(playersData);
+        setPlayers(sortedPlayers as Player[]);
       } catch (error) {
         alert(`Fetch players error with ${error}`);
       }

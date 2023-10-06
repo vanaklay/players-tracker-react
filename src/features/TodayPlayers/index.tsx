@@ -3,7 +3,11 @@ import PlayerItem from "./PlayerItem";
 import { formatDate, getTodayDate } from "../../utils/date";
 import Submit from "../../components/Submit";
 import Spinner from "../../components/Spinner";
-import { updatePlayers } from "../../utils/players";
+import {
+  getSortedPlayersByFirstName,
+  getTodayPlayers,
+  updatePlayers,
+} from "../../utils/players";
 import SuccessToast from "../../components/SuccessToast";
 import { TodayPlayer, UpdatedAttendancePlayer } from "../types";
 import { getPlayers } from "../../api/firebase-api";
@@ -14,19 +18,11 @@ const TodayPlayers = (): JSX.Element => {
 
   useEffect(() => {
     const getPlayersMap = async () => {
-      const today = getTodayDate();
       try {
         const playersData = await getPlayers();
-
-        const todayPlayers = playersData.map((player) => {
-          return {
-            id: player.id,
-            firstName: player.firstName,
-            lastName: player.lastName,
-            attendance: player.daysAttendance[today] || false,
-          };
-        });
-        setTodayPlayers(todayPlayers as TodayPlayer[]);
+        const todayPlayers = getTodayPlayers(playersData);
+        const sortedData = getSortedPlayersByFirstName(todayPlayers);
+        setTodayPlayers(sortedData as TodayPlayer[]);
       } catch (error) {
         alert(`Fetch players error with ${error}`);
       }

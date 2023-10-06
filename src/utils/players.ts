@@ -1,5 +1,6 @@
 import { updatePlayerAttendance } from "../api/firebase-api";
-import { TodayPlayer } from "../features/types";
+import { Player, TodayPlayer } from "../features/types";
+import { getTodayDate } from "./date";
 
 export const updatePlayers = async (players: TodayPlayer[]) => {
   if (players.length === 0) throw new Error("Players is undefined !");
@@ -17,3 +18,16 @@ export const updatePlayers = async (players: TodayPlayer[]) => {
     alert(`Error Update Players : ${error}`);
   }
 };
+
+export const getSortedPlayersByFirstName = (data: TodayPlayer[] | Player[]) =>
+  [...data].sort((a, b) => a.firstName.localeCompare(b.firstName));
+
+export const getTodayPlayers = (data: Player[]) =>
+  data.map((player) => {
+    return {
+      id: player.id,
+      firstName: player.firstName,
+      lastName: player.lastName,
+      attendance: player.daysAttendance[getTodayDate()] || false,
+    };
+  });
