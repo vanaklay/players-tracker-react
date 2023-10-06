@@ -9,7 +9,7 @@ import {
 import { database } from "../service/firebase";
 import { getTodayDate } from "../utils/date";
 
-const collectionName = "test-players";
+const collectionName = "players";
 
 export const getPlayers = async () => {
   const playersCollection = collection(database, collectionName);
