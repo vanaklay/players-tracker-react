@@ -1,8 +1,10 @@
 import { FormEvent } from "react";
 import Submit from "../../components/Submit";
 import { addPlayerOnDatabase } from "../../api/firebase-api";
+import { useNavigate } from "react-router-dom";
 
 const AddForm = (): JSX.Element => {
+  const navigate = useNavigate();
   const addPlayer = async (firstName: string, lastName: string) => {
     await addPlayerOnDatabase(firstName, lastName);
   };
@@ -31,6 +33,7 @@ const AddForm = (): JSX.Element => {
 
     firstNameInput.value = "";
     lastNameInput.value = "";
+    navigate("/");
   };
 
   return (
