@@ -1,14 +1,31 @@
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import PDFDocument from "./PDFDocument";
 import Spinner from "../../components/Spinner";
 import styles from "./index.module.css";
 import MonthSelector from "./MonthSelector";
-import { PlayersContext } from "../../context/players-context";
+import { Player } from "../types";
+import { getPlayers } from "../../api/firebase-api";
 
 const PDFGenerator = () => {
   const [selectedMonth, setSelectedMonth] = useState<string>("");
-  const { players } = useContext(PlayersContext);
+  const [players, setPlayers] = useState<Player[]>([]);
+
+  useEffect(() => {
+    const getPlayersMap = async () => {
+      try {
+        const playersData = await getPlayers();
+        setPlayers(playersData as Player[]);
+      } catch (error) {
+        alert(`Fetch players error with ${error}`);
+      }
+    };
+
+    return () => {
+      getPlayersMap();
+    };
+  }, []);
+
   if (!players || players.length === 0)
     return (
       <div className="centered-spinner">

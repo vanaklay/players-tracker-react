@@ -1,16 +1,42 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import PlayerItem from "./PlayerItem";
 import { formatDate, getTodayDate } from "../../utils/date";
 import Submit from "../../components/Submit";
 import Spinner from "../../components/Spinner";
 import { updatePlayers } from "../../utils/players";
 import SuccessToast from "../../components/SuccessToast";
-import { PlayersContext } from "../../context/players-context";
-import { UpdatedAttendancePlayer } from "../types";
+import { TodayPlayer, UpdatedAttendancePlayer } from "../types";
+import { getPlayers } from "../../api/firebase-api";
 
 const TodayPlayers = (): JSX.Element => {
   const [showSuccess, setShowSuccess] = useState(false);
-  const { todayPlayers, setTodayPlayers } = useContext(PlayersContext);
+  const [todayPlayers, setTodayPlayers] = useState<TodayPlayer[]>([]);
+
+  useEffect(() => {
+    const getPlayersMap = async () => {
+      const today = getTodayDate();
+      try {
+        const playersData = await getPlayers();
+
+        const todayPlayers = playersData.map((player) => {
+          return {
+            id: player.id,
+            firstName: player.firstName,
+            lastName: player.lastName,
+            attendance: player.daysAttendance[today] || false,
+          };
+        });
+        setTodayPlayers(todayPlayers as TodayPlayer[]);
+      } catch (error) {
+        alert(`Fetch players error with ${error}`);
+      }
+    };
+
+    return () => {
+      getPlayersMap();
+    };
+  }, []);
+
   if (!todayPlayers || todayPlayers.length === 0)
     return (
       <div className="centered-spinner">
